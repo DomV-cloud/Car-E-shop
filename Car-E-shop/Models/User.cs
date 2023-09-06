@@ -20,8 +20,8 @@ namespace Car_E_shop.Models
         [Required]
         public string Password { get; set; } = string.Empty;
 
-        [Required]
-        public decimal Balance { get; set; }
+
+        public decimal Balance { get; set; } = 0;
 
         [Required]
         public string Roles { get; set; } = string.Empty;

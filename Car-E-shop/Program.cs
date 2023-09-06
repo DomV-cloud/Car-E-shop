@@ -43,16 +43,6 @@ namespace Car_E_shop
             app.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-           Host.CreateDefaultBuilder(args)
-               .ConfigureWebHostDefaults(webBuilder =>
-               {
-                   webBuilder.UseStartup<Startup>();
-                   webBuilder.ConfigureLogging(logging =>
-                   {
-                       logging.ClearProviders();
-                       logging.SetMinimumLevel(LogLevel.None);
-                   });
-               });
+     
     }
 }

@@ -7,15 +7,18 @@ namespace Car_E_shop.Database.Context
     {
         public DbSet<User> Users { get; set; }
 
-        public EshopContext(DbContextOptions<EshopContext> options)
-         : base(options)
+        public DbSet<Car> Cars { get; set; }
+
+        public EshopContext()
         {
+            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           
+            optionsBuilder.UseSqlServer(@"Server=.\SQLExpress;Database=Eshop;Trusted_Connection=True;TrustServerCertificate=True;");
         }
+
 
 
     }
