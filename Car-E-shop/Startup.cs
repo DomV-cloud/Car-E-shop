@@ -1,4 +1,6 @@
-﻿namespace Car_E_shop
+﻿using Car_E_shop.Database.Context;
+
+namespace Car_E_shop
 {
     public class Startup
     {
@@ -11,10 +13,11 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Registruj IConfiguration
+            services.AddScoped<EshopContext>();
             services.AddSingleton(Configuration);
 
-            // Další konfigurace služeb...
         }
+
+
     }
 }

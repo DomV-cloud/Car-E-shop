@@ -1,22 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Car_E_shop.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Car_E_shop.Database.Context
 {
     public class EshopContext: DbContext
     {
-        private readonly IConfiguration _configuration;
+        public DbSet<User> Users { get; set; }
 
-        public EshopContext(IConfiguration configuration)
+        public EshopContext(DbContextOptions<EshopContext> options)
+         : base(options)
         {
-            _configuration = configuration;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.\SQLExpress;Database=Eshop;Trusted_Connection=True;TrustServerCertificate=True;");
+           
         }
 
-        
 
     }
 }

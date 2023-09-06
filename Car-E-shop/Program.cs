@@ -19,7 +19,6 @@ namespace Car_E_shop
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddLogging();
-            builder.Services.AddSingleton<IConfiguration>();
 
             builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
@@ -45,15 +44,15 @@ namespace Car_E_shop
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-       Host.CreateDefaultBuilder(args)
-           .ConfigureWebHostDefaults(webBuilder =>
-           {
-               webBuilder.UseStartup<Startup>();
-               webBuilder.ConfigureLogging(logging =>
+           Host.CreateDefaultBuilder(args)
+               .ConfigureWebHostDefaults(webBuilder =>
                {
-                   logging.ClearProviders();
-                   logging.SetMinimumLevel(LogLevel.None);
+                   webBuilder.UseStartup<Startup>();
+                   webBuilder.ConfigureLogging(logging =>
+                   {
+                       logging.ClearProviders();
+                       logging.SetMinimumLevel(LogLevel.None);
+                   });
                });
-           });
     }
 }
