@@ -1,6 +1,8 @@
 ﻿using Car_E_shop.Database.Context;
 using Car_E_shop.Models;
 using Car_E_shop.RepositoryPattern.Interfaces;
+using Car_E_shop.Services;
+using Car_E_shop.Services.ValidateId;
 
 namespace Car_E_shop.RepositoryPattern.UserRepo
 {
@@ -9,15 +11,28 @@ namespace Car_E_shop.RepositoryPattern.UserRepo
 
         private readonly EshopContext _context;
 
-        public UserRepository(EshopContext context)
+        private readonly IValidateIdService _validateId;
+
+        public UserRepository(EshopContext context, IValidateIdService validateId)
         {
             _context = new EshopContext();
+            _validateId = validateId;
         }
 
 
         public void DeleteById(int id)
         {
-           
+            if (_validateId.isIdValid(id))
+            {
+                throw new Exception();
+            }
+
+            User userToRemove = _context.Users.Find(id)!;
+
+            if (userToRemove is null)
+            {
+                throw new Exception();
+            }
         }
 
         public IEnumerable<User> GetAll()
@@ -27,6 +42,7 @@ namespace Car_E_shop.RepositoryPattern.UserRepo
 
         public User GetById(int id)
         {
+
             return _context.Users.Find(id);
         }
 

@@ -1,4 +1,5 @@
 using Car_E_shop.Database.Context;
+using Car_E_shop.Services.ValidateId;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
@@ -22,6 +23,8 @@ namespace Car_E_shop
 
             builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
+
+            builder.Services.AddSingleton<IValidateIdService, ValidateIdService>();
 
 
             var app = builder.Build();
