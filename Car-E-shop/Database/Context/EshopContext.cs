@@ -8,5 +8,7 @@ namespace Car_E_shop.Database.Context
         {
             optionsBuilder.UseSqlServer(@"Server=.\SQLExpress;Database=Eshop;Trusted_Connection=True;TrustServerCertificate=True;");
         }
+
+
     }
 }
