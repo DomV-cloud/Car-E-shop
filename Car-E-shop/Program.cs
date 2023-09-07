@@ -1,7 +1,9 @@
 using Car_E_shop.Database.Context;
+using Car_E_shop.Services.ChechForNull;
 using Car_E_shop.Services.ValidateId;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using System.ComponentModel.DataAnnotations;
 
 namespace Car_E_shop
 {
@@ -25,6 +27,7 @@ namespace Car_E_shop
             builder.Logging.AddConsole();
 
             builder.Services.AddSingleton<IValidateIdService, ValidateIdService>();
+            builder.Services.AddSingleton<ICheckNull, CheckForNullService>();
 
 
             var app = builder.Build();

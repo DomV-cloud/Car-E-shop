@@ -2,7 +2,9 @@
 using Car_E_shop.Models;
 using Car_E_shop.RepositoryPattern.Interfaces;
 using Car_E_shop.Services;
+using Car_E_shop.Services.ChechForNull;
 using Car_E_shop.Services.ValidateId;
+using System.ComponentModel.DataAnnotations;
 
 namespace Car_E_shop.RepositoryPattern.UserRepo
 {
@@ -13,19 +15,20 @@ namespace Car_E_shop.RepositoryPattern.UserRepo
 
         private readonly IValidateIdService _validateId;
 
-        public UserRepository(EshopContext context, IValidateIdService validateId)
+        private readonly ICheckNull _checkNull;
+
+        public UserRepository(EshopContext context, IValidateIdService validateId, ICheckNull checkNull)
         {
             _context = new EshopContext();
             _validateId = validateId;
+            _checkNull = checkNull;
         }
 
+        public IValidatableObject ValidateObject => _validateObject;
 
         public void DeleteById(int id)
         {
-            if (_validateId.isIdValid(id))
-            {
-                throw new Exception();
-            }
+            _validateId.Validate(id);
 
             User userToRemove = _context.Users.Find(id)!;
 

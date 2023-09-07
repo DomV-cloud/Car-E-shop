@@ -1,4 +1,7 @@
-﻿namespace Car_E_shop.Services.ValidateId
+﻿using Car_E_shop.Exceptions;
+using Car_E_shop.Exceptions.ErrorMessages;
+
+namespace Car_E_shop.Services.ValidateId
 {
     public class ValidateIdService : IValidateIdService
     {
@@ -11,8 +14,9 @@
         {
             if (!isIdValid(id))
             {
-                throw new Exception();
+                throw new InvalidIdException(Message.InvalidId(id));
             }
+
         }
     }
 }
