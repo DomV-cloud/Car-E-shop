@@ -6,21 +6,18 @@ namespace Car_E_shop.Services.ChechForNull
 {
     public class CheckForNullService : ICheckNull
     {
-        private bool IsNull(object entity)
+        public bool IsNull(object entity)
         {
-            User userToCheck = (User) entity;
 
-            return userToCheck is not null;
+            return entity is not null;
         }
 
         public void ValidateEntity(object entity)
         {
 
-            User userToCheck = (User)entity;
-
-            if (!IsNull(userToCheck))
+            if (!IsNull(entity))
             {
-                throw new ObjectIsNullException(Message.ObjectIsNull(userToCheck));
+                throw new ObjectIsNullException(Message.ObjectIsNull(entity));
             }
         }
     }

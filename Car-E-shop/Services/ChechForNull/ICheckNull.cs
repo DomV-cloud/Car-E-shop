@@ -2,7 +2,7 @@
 {
     public interface ICheckNull
     {
-        private bool IsNull(Object entity);
+        public bool IsNull(Object entity);
 
         public void ValidateEntity(Object entity);
     }
