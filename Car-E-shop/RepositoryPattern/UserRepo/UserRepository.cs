@@ -60,7 +60,7 @@ namespace Car_E_shop.RepositoryPattern.UserRepo
 
         public void Save()
         {
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void Update(User entity)
