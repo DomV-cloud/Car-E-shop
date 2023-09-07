@@ -8,7 +8,7 @@ namespace Car_E_shop.Services.ChechForNull
     {
         public bool IsNull(object entity)
         {
-            return entity is not null;
+            return entity is null;
         }
 
        

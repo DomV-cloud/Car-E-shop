@@ -30,14 +30,15 @@ namespace Car_E_shop
             builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
 
-            builder.Services.AddSingleton<IValidateIdService, ValidateIdService>();
-            builder.Services.AddSingleton<ICheckNull, CheckForNullService>();
-            builder.Services.AddSingleton<IRepository<User>, UserRepository>();
+            builder.Services.AddTransient<IValidateIdService, ValidateIdService>();
+            builder.Services.AddTransient<ICheckNull, CheckForNullService>();
+            builder.Services.AddTransient<IRepository<User>, UserRepository>();
 
-            /*
+            
             builder.Services.AddDbContext<EshopContext>(options =>
-               options.UseSqlServer(builder.Configuration.GetConnectionString("Connectionstring")));
-            */
+               options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
+            builder.Services.AddMemoryCache();
+
 
             var app = builder.Build();
 

@@ -69,7 +69,6 @@ namespace Car_E_shop.Controllers
                 }
 
                 _userRepository.Insert(user);
-                _userRepository.Save();
 
             }
             catch (Exception ex)

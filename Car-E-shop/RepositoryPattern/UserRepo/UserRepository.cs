@@ -27,6 +27,7 @@ namespace Car_E_shop.RepositoryPattern.UserRepo
         public void Delete(User user)
         {
             _context.Users.Remove(user);
+            Save();
         }
 
         public IEnumerable<User> GetAll()
@@ -53,6 +54,7 @@ namespace Car_E_shop.RepositoryPattern.UserRepo
             using (_context)
             {
                 _context.Users.Add(entity);
+                Save();
             }
         }
 
@@ -66,6 +68,7 @@ namespace Car_E_shop.RepositoryPattern.UserRepo
             using (_context)
             {
                 _context.Users.Update(entity);
+                Save();
             }
         }
     }
