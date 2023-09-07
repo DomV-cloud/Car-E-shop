@@ -1,7 +1,11 @@
 using Car_E_shop.Database.Context;
+using Car_E_shop.Models;
+using Car_E_shop.RepositoryPattern.Interfaces;
+using Car_E_shop.RepositoryPattern.UserRepo;
 using Car_E_shop.Services.ChechForNull;
 using Car_E_shop.Services.ValidateId;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.ComponentModel.DataAnnotations;
 
@@ -28,7 +32,12 @@ namespace Car_E_shop
 
             builder.Services.AddSingleton<IValidateIdService, ValidateIdService>();
             builder.Services.AddSingleton<ICheckNull, CheckForNullService>();
+            builder.Services.AddSingleton<IRepository<User>, UserRepository>();
 
+            /*
+            builder.Services.AddDbContext<EshopContext>(options =>
+               options.UseSqlServer(builder.Configuration.GetConnectionString("Connectionstring")));
+            */
 
             var app = builder.Build();
 

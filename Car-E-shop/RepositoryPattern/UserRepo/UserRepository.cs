@@ -14,97 +14,58 @@ namespace Car_E_shop.RepositoryPattern.UserRepo
 
         private readonly EshopContext _context;
 
-        private readonly IValidateIdService _validateId;
+     
 
-        private readonly ICheckNull _checkNull;
 
-        private readonly ILogger _logger;
-
-        public UserRepository(EshopContext context, IValidateIdService validateId, ICheckNull checkNull, ILogger logger)
+        public UserRepository(EshopContext context)
         {
-            _context = new EshopContext();
-            _validateId = validateId;
-            _checkNull = checkNull;
-            _logger = logger;
+            _context = context;
+          
         }
 
 
-        public void DeleteById(int id)
+        public void Delete(User user)
         {
-            try
-            {
-                _validateId.Validate(id);
-
-
-                User userToRemove = _context.Users.Find(id)!;
-
-                _checkNull.ValidateEntity(userToRemove);
-
-                _context.Users.Remove(userToRemove);
-
-            }
-            catch (InvalidIdException ex)
-            {
-
-                _logger.LogError(ex.Message);
-            }
-            catch (ObjectIsNullException ex)
-            {
-
-                _logger.LogError(ex.Message);
-            }
+            _context.Users.Remove(user);
         }
 
         public IEnumerable<User> GetAll()
         {
-            return _context.Users.ToList();
+            using (_context)
+            {
+                return _context.Users.ToList();
+
+            }
         }
 
         public User GetById(int id)
         {
 
-            try
+            using (_context)
             {
-                _validateId.Validate(id);
-
-            }
-            catch (InvalidIdException ex)
-            {
-
-                _logger.LogError(ex.Message);
+                return _context.Users.Find(id);
             }
 
-
-            return _context.Users.Find(id);
         }
 
         public void Insert(User entity)
         {
-            try
+            using (_context)
             {
-                _checkNull.ValidateEntity(entity);
-
                 _context.Users.Add(entity);
             }
-            catch (ObjectIsNullException ex)
-            {
+        }
 
-                _logger.LogError(ex.Message);
-            }
+        public void Save()
+        {
+            _context.SaveChangesAsync();
         }
 
         public void Update(User entity)
         {
-            try
+            using (_context)
             {
-                _checkNull.ValidateEntity(entity);
-
                 _context.Users.Update(entity);
-            }
-            catch (ObjectIsNullException ex)
-            {
-
-                _logger.LogError(ex.Message);
             }
         }
     }

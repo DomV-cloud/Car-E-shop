@@ -10,6 +10,8 @@
 
         public void Insert(T entity);
 
-        public void DeleteById(int id);
+        public void Delete(T entity);
+
+        public void Save();
     }
 }

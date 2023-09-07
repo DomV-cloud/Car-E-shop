@@ -4,6 +4,5 @@
     {
         public bool IsNull(Object entity);
 
-        public void ValidateEntity(Object entity);
     }
 }

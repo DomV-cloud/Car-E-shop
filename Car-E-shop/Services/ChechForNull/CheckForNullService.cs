@@ -8,17 +8,9 @@ namespace Car_E_shop.Services.ChechForNull
     {
         public bool IsNull(object entity)
         {
-
             return entity is not null;
         }
 
-        public void ValidateEntity(object entity)
-        {
-
-            if (!IsNull(entity))
-            {
-                throw new ObjectIsNullException(Message.ObjectIsNull(entity));
-            }
-        }
+       
     }
 }
