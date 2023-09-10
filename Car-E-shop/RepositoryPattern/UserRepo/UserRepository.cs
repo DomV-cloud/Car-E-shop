@@ -1,5 +1,4 @@
 ﻿using Car_E_shop.Database.Context;
-using Car_E_shop.Exceptions;
 using Car_E_shop.Models;
 using Car_E_shop.RepositoryPattern.Interfaces;
 using Car_E_shop.Services;

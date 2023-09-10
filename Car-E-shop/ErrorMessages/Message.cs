@@ -1,4 +1,4 @@
-﻿namespace Car_E_shop.Exceptions.ErrorMessages
+﻿namespace Car_E_shop.ErrorMessages
 {
     public static class Message
     {
@@ -8,7 +8,7 @@
             return $"The {nameof(id)} is null or negative";
         }
 
-        public static string ObjectIsNull(Object obj)
+        public static string ObjectIsNull(object obj)
         {
             return $"The {nameof(obj)} is null";
         }

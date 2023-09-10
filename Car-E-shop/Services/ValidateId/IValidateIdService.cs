@@ -2,10 +2,7 @@
 {
     public interface IValidateIdService
     {
-        public bool isIdValid(int? id);
-
-        public void Validate(int? id);
-        
+        public bool IsIdValid(int? id);
 
 
     }

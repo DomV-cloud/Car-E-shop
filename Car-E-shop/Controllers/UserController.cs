@@ -1,10 +1,11 @@
 ﻿using Car_E_shop.Database.Context;
-using Car_E_shop.Exceptions.ErrorMessages;
+using Car_E_shop.ErrorMessages;
 using Car_E_shop.Models;
 using Car_E_shop.RepositoryPattern.Interfaces;
 using Car_E_shop.RepositoryPattern.UserRepo;
 using Car_E_shop.Services.ChechForNull;
 using Car_E_shop.Services.ValidateId;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Car_E_shop.Controllers
@@ -29,6 +30,7 @@ namespace Car_E_shop.Controllers
 
         [HttpGet]
         [Route("/api/get/users")]
+        [Authorize(AuthenticationSchemes = "ApiKey")]
         public IActionResult GetAllUsers()
         {
             IEnumerable<User>? users = null;
@@ -56,6 +58,7 @@ namespace Car_E_shop.Controllers
 
         [HttpPost]
         [Route("api/post/user")]
+        [Authorize(AuthenticationSchemes = "ApiKey")]
         public IActionResult PostUser(User user)
         {
            
