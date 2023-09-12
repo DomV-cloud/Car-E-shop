@@ -20,17 +20,20 @@ namespace Car_E_shop.Controllers
 
         private readonly ICheckNull _checkNull;
 
-        public UserController(IRepository<User> userRepository, ILogger<UserController> logger, IValidateIdService validateId, ICheckNull checkNull)
+        private readonly JWTConfig _jWTConfig;
+
+        public UserController(IRepository<User> userRepository, ILogger<UserController> logger, IValidateIdService validateId, ICheckNull checkNull, JWTConfig jWTConfig)
         {
             _userRepository = userRepository;
             _logger = logger;
             _validateId = validateId;
             _checkNull = checkNull;
+            _jWTConfig = jWTConfig;
         }
 
         [HttpGet]
         [Route("/api/get/users")]
-        [Authorize(AuthenticationSchemes = "ApiKey")]
+        //[Authorize(AuthenticationSchemes = "ApiKey")]
         public IActionResult GetAllUsers()
         {
             IEnumerable<User>? users = null;
@@ -58,7 +61,7 @@ namespace Car_E_shop.Controllers
 
         [HttpPost]
         [Route("api/post/user")]
-        [Authorize(AuthenticationSchemes = "ApiKey")]
+        //[Authorize(AuthenticationSchemes = "ApiKey")]
         public IActionResult PostUser(User user)
         {
            

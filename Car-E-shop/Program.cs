@@ -5,16 +5,20 @@ using Car_E_shop.RepositoryPattern.Interfaces;
 using Car_E_shop.RepositoryPattern.UserRepo;
 using Car_E_shop.Services.ChechForNull;
 using Car_E_shop.Services.ValidateId;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace Car_E_shop
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
 
@@ -28,8 +32,24 @@ namespace Car_E_shop
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddLogging();
-            builder.Services.AddAuthentication("ApiKey")
-                .AddScheme<ApiKeyAuthenticationSchemeOptions, ApiKeyAuthenticationHandler>("ApiKey", opts => opts.ApiKey = builder.Configuration.GetValue<string>("AllowedApiKeys"));
+
+
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
+                        options.TokenValidationParameters = new TokenValidationParameters()
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(key),
+                            ValidateIssuer = true,
+                            ValidateAudience = false,
+                            RequireExpirationTime = true,
+
+                        };
+                    });
+               
 
             builder.Logging.ClearProviders();
             builder.Logging.AddConsole();
@@ -41,6 +61,8 @@ namespace Car_E_shop
             
             builder.Services.AddDbContext<EshopContext>(options =>
                options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
+            builder.Services.Configure<JWTConfig>(builder.Configuration.GetSection("Jwt"));
+            
             builder.Services.AddMemoryCache();
 
             /*
@@ -111,6 +133,7 @@ namespace Car_E_shop
                 });
             });
 
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -127,6 +150,7 @@ namespace Car_E_shop
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseApiKeyMiddleware();
 
