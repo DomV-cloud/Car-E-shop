@@ -43,6 +43,7 @@ namespace Car_E_shop
                options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
             builder.Services.AddMemoryCache();
 
+            /*
             builder.Services.AddSwaggerGen(setup =>
             {
                 // Include 'SecurityScheme' to use JWT Authentication
@@ -65,12 +66,50 @@ namespace Car_E_shop
                 setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
 
                 setup.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        { jwtSecurityScheme, Array.Empty<string>() }
-    });
+                {
+                    { jwtSecurityScheme, Array.Empty<string>() }
+                });
 
             });
+            */
 
+            builder.Services.AddSwaggerGen(setup =>
+            {
+                setup.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = ".NET Core API ",
+                    Version = "v1",
+                    Description = "Test description"
+                });
+                setup.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please insert token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "bearer"
+                });
+
+                setup.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                            
+                        },
+                        new string[]
+                            {
+
+                            }
+                    }
+                });
+            });
 
             var app = builder.Build();
 
@@ -78,7 +117,11 @@ namespace Car_E_shop
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI( c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json","MY API");
+                    
+                });
             }
 
             app.UseHttpsRedirection();
