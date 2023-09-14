@@ -58,8 +58,9 @@ namespace Car_E_shop
             builder.Services.AddTransient<ICheckNull, CheckForNullService>();
             builder.Services.AddTransient<IRepository<User>, UserRepository>();
 
-            
-            builder.Services.AddDbContext<EshopContext>(options =>
+			builder.Services.AddAutoMapper(typeof(AutomapperConfig));
+
+			builder.Services.AddDbContext<EshopContext>(options =>
                options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
             builder.Services.Configure<JWTConfig>(builder.Configuration.GetSection("Jwt"));
             
